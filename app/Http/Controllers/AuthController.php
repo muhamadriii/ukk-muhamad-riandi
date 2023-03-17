@@ -14,6 +14,7 @@ class AuthController extends Controller
 
     public function login(Request $request){
 
+        //login petugas/admin
         if (
             auth()->guard('petugas')->attempt([
                 'username' => $request->username,
@@ -21,9 +22,10 @@ class AuthController extends Controller
             ])
         ) {
             auth()->guard('masyarakat')->logout();
-            return to_route('petugas.masyarakat.index');
+            return to_route('petugas.pengaduan.index');
         }
-        
+
+        // login masyarakat
         elseif(
             auth()->guard('masyarakat')->attempt([
                 'username' => $request->username,
@@ -31,9 +33,10 @@ class AuthController extends Controller
             ])
         ) {
             auth()->guard('petugas')->logout();
-            return redirect('/');
+            return to_route('masyarakat.pengaduan.index');
         }
 
+        //login false
         return redirect()->back();
         
     }

@@ -16,4 +16,8 @@ class Tanggapan extends Model
         'isi',
     ];
     
+    public function petugas()
+    {
+        return $this->belongsTo(Petugas::class);
+    }
 }

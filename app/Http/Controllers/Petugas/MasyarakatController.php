@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Masyarakat;
 use App\Models\Village;
 use View;
+use Hash;
 
 
 class MasyarakatController extends Controller
@@ -35,12 +36,13 @@ class MasyarakatController extends Controller
             'village_id' => 'required',
             'nik' => 'required|integer|unique:masyarakats',
             'name' => 'required',
-            'username' => 'required|unique:petugas,username',
+            'username' => 'required|unique:petugas,username|unique:masyarakat,username',
             'password' => 'required|max:10|min:4',
             'telp' => 'required|max:13|min:11',
         ]);
 
         $payload = $request->all();
+        $payload['password'] = Hash::make($request->password);
         $data = $this->model->create($payload);
 
         return to_route($this->route.'index');
@@ -58,13 +60,14 @@ class MasyarakatController extends Controller
         
         $validated = $request->validate([
             'village_id' => 'required',
-            'nik' => 'integer|unique:masyarakats',
+            'nik' => 'required',
             'name' => 'required',
-            'username' => 'required|unique:petugas,username|unique:masyarakats,username',
-            'telp' => 'min:11|max:14'
+            'username' => 'required|unique:petugas,username',
+            'telp' => 'required'
         ]);
 
         $payload = $request->all();
+        $payload['password'] = Hash::make($request->password);
         $data = $model->update($payload);
 
         return to_route($this->route.'index');

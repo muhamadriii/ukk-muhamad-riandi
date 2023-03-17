@@ -15,7 +15,8 @@
   
       <div class="mb-3">
         <label for="nik" class="form-label">nik</label>
-        <input type="number" class="form-control" disabled id="nik" name="nik" aria-describedby="nikHelp" value="{{ $data->nik}}">
+        <input type="number" class="form-control" disabled aria-describedby="nikHelp" value="{{ $data->nik}}">
+        <input type="hidden"  name="nik" aria-describedby="nikHelp" value="{{ $data->nik}}">
       </div>
       
       <div class="mb-3">
@@ -26,6 +27,7 @@
       <div class="mb-3">
         <label for="username" class="form-label">username</label>
         <input type="text" class="form-control" disabled id="username" name="username" aria-describedby="usernameHelp" value="{{ $data->username}}">
+        <input type="hidden" class="form-control" id="username" name="username" aria-describedby="usernameHelp" value="{{ $data->username}}">
       </div>
       
       <div class="mb-3">

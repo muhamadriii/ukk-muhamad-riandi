@@ -18,7 +18,7 @@
         <div class=" {{ auth()->guard('petugas')->user()->level == 'petugas' && !isset($data)  ? "col-12" : "col-9" }} ">
             <div class="d-flex justify-content-between my-3">
                 <h4>Data Pengaduan</h4>
-                @if (!isset($data) && auth()->guard('petugas')->user()->level == 'admin')
+                @if (!isset($data))
                 <form class="d-flex" action="{{ route($route.'index')}}" method="get">
 
                     <div class="m-1">
@@ -31,6 +31,7 @@
                         <input type="date" name="enddate" id="enddate" value="">
                     </div>
 
+                    @if (auth()->guard('petugas')->user()->level == 'admin')
                     <div class="m-1">
                         <label for="village">desa</label><br>
                         <select name="village" id="village" aria-placeholder="village">
@@ -40,6 +41,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @endif
 
                     <div class="m-1">
                         <label for="category">category</label><br>
@@ -67,7 +69,7 @@
                     </div>
                 </form>
                 @endif
-                @if (isset($data) && auth()->guard('petugas')->user()->level == 'admin')
+                @if (isset($data) && auth()->guard('petugas')->check())
                 <a class="btn btn-primary" href="{{ route($route.'index')}}">Create</a>
                 @endif
             </div>

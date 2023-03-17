@@ -1,4 +1,4 @@
-<h4 class="card-header">Create Data</h4>
+<h4 class="card-header">Buat Pengaduan</h4>
 <div class="card-body">
   <form action="{{ route($route.'store')}}" method="POST" enctype="multipart/form-data">
       @csrf
@@ -27,11 +27,11 @@
         <label for="judul" class="form-label">judul</label>
         <input type="text" class="form-control" id="judul" name="judul" aria-describedby="judulHelp">
       </div>
-        
-        <div class="mb-3">
-          <label for="foto" class="form-label">foto</label>
-          <input type="file" accept="png,jpg,jpeg,svg" class="form-control" id="foto" name="foto" aria-describedby="fotoHelp">
-        </div>
+      
+      <div class="mb-3">
+        <label for="foto" class="form-label">foto</label>
+        <input type="file" accept="png,jpg,jpeg,svg" class="form-control" id="foto" name="foto" aria-describedby="fotoHelp">
+      </div>
       
       <div class="mb-3">
         <label for="isi" class="form-label">isi</label>

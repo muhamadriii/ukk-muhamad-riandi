@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Petugas;
+namespace App\Http\Controllers\Masyarakat;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pengaduan;
-use App\Models\Tanggapan;
 use App\Models\Category;
 use App\Models\Village;
 use View;
+use Auth;
 use Storage;
-use Route;
 use PDF;
 
 
@@ -19,10 +18,10 @@ class PengaduanController extends Controller
     protected $view;
     protected $route;
 
-    public function __construct(Pengaduan $model){
-        $this->model = $model;
-        $this->route = 'petugas.pengaduan.';
-        $this->view = 'pages.petugas.pengaduan.';
+    public function __construct(Pengaduan $pengaduan){
+        $this->model = $pengaduan;
+        $this->route = 'masyarakat.pengaduan.';
+        $this->view = 'pages.masyarakat.pengaduan.';
         $this->category = Category::orderBy('name', 'ASC')->get();
         $this->village = Village::orderBy('name', 'ASC')->get();
 
@@ -30,12 +29,14 @@ class PengaduanController extends Controller
         View::share('category', $this->category);
         View::share('route', $this->route);
         View::share('view', $this->view);
+
     }
 
     public function index(Request $request){
         $url = $request->fullUrl();
-        $auth = auth()->guard('petugas')->user();
+        $auth = Auth::guard('masyarakat')->user();
 
+        
         $model = $this->model;
 
         if ($request->strdate) {
@@ -50,15 +51,11 @@ class PengaduanController extends Controller
             $model = $model->where('category_id', $request->category);
         }
 
-        if ($request->village && $request->village != 'all' && auth()->guard('petugas')->user()->level == 'admin') {
+        if ($request->village && $request->village != 'all') {
             $model = $model->where('village_id', $request->village);
         }
-        if (auth()->guard('petugas')->user()->level == 'petugas') {
-            $datas = $model->with('pengadu','category', 'village')->where('village_id', $auth->village_id)->get();
-        }else{
-            $datas = $model->with('pengadu','category', 'village')->get();
-        }
 
+        $datas = $model->with('pengadu','category', 'village')->where('nik', $auth->nik)->get();
         foreach ($datas as $data) {
             $data->foto = asset('storage/foto-pengaduan').'/'.$data->foto;
         }
@@ -66,12 +63,15 @@ class PengaduanController extends Controller
         if ($a = $request->pdf == true) {
             return $this->pdf($datas);
         }
-
         return view($this->view.'index', compact('datas','url'));
     }
 
     public function store(Request $request){
+        $auth = Auth::guard('masyarakat')->user();
         $payload = $request->all();
+        $payload['nik'] = $auth->nik;
+        $payload['date'] = now();
+        $payload['status'] = '0';
 
         if ($request->file('foto')) {
             $filename = $request->file('foto')->getClientOriginalName();
@@ -82,59 +82,66 @@ class PengaduanController extends Controller
             );
             $payload['foto'] = $filename;
         }
-        $payload['date'] = now();
-        $payload['nik'] = '111101111000010000';
-        $payload['status'] = '0';
-        $payload['masyarakat_id'] = auth()->guard('petugas')->user()->id;
 
         $data = $this->model->create($payload);
 
         return to_route($this->route.'index');
     }
 
-    public function edit($id){
-        $data = $this->model->with('pengadu')->with('village')->with('category')->with('tanggapan')->find($id);
-        $datas = $this->model->get();
+    public function edit(Request $request,$id){
+        $auth = Auth::guard('masyarakat')->user();
+        $data = $this->model->with('tanggapan', 'tanggapan.petugas')->find($id);
+        $datas = $this->model->where('nik', $auth->nik)->get();
         foreach ($datas as $item) {
-            $item->foto = asset('storage/foto-pengaduan').'/'.$item->foto;
+            $item->foto = asset('storage/foto-pengaduan').'/'.$data->foto;
+        }
+
+        if ($request->pdf == 'true' && $data->tanggapan) {
+            return $this->pdfSinggle($data);
         }
 
         return view($this->view.'index', compact('data', 'datas'));
     }
 
-    public function destroy($id){
+    public function update(Request $request, $id){
+        $auth = Auth::guard('masyarakat')->user();
         $model = $this->model->find($id);
-        if ($model){
-            $data = $model->delete();
+        $payload = $request->all();
+        $payload['nik'] = $auth->nik;
+        $payload['date'] = now();
+        $payload['status'] = '0';
+
+        if ($request->file('foto')) {
+            $filename = $request->file('foto')->getClientOriginalName();
+            Storage::putFileAs(
+                'public/foto-pengaduan',
+                $request->file('foto'),
+                $filename
+            );
+            $payload['foto'] = $filename;
         }
+
+        $data = $model->update($payload);
 
         return to_route($this->route.'index');
     }
 
-    public function tanggapan(Request $request, $id){
-        $pengaduan = $this->model->find($id);
-        $payload = $request->all();
-        $payload['date'] = now();
-        $payload['petugas_id'] = '1';
-        $payload['pengaduan_id'] = $pengaduan->id;
-        $tanggapan = Tanggapan::where('pengaduan_id', $id)->first();
-        
-        if ($tanggapan) {
-            $data = $tanggapan->update($payload);
-        }else{
-            $data = Tanggapan::create($payload);
-        }
+    public function destroy($id){
+        $model = $this->model->find($id);
+        $data = $model->delete();
 
-        $pengaduan->update([
-            'status' => $request->status
-        ]);
         return to_route($this->route.'index');
     }
 
     public function pdf($datas){
         $pdf = PDF::loadview($this->view.'alldatapdf',['datas'=>$datas]);
-        $name = auth()->guard('petugas')->user()->name.'-laporan-pengaduan-'.str()->random(5);
+        $name = auth()->guard('masyarakat')->user()->name.'-laporan-pengaduan-'.str()->random(5);
     	return $pdf->download($name.'.pdf');
     }
 
+    public function pdfSinggle($data){
+        $pdf = PDF::loadview($this->view.'singgle-pdf',['data'=>$data]);
+        $name = auth()->guard('masyarakat')->user()->name.'-laporan-'.$data->judul.'-'.str()->random(5);
+    	return $pdf->download($name.'.pdf');
+    }
 }

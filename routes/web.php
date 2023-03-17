@@ -9,6 +9,8 @@ use App\Http\Controllers\Petugas\MasyarakatController;
 use App\Http\Controllers\Petugas\PetugasController;
 use App\Http\Controllers\Petugas\PengaduanController;
 
+use App\Http\Controllers\masyarakat\PengaduanController as MasyarakatPengaduan;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +42,17 @@ Route::prefix('petugas')->name('petugas.')->group( function(){
         Route::resource('pengaduan', PengaduanController::class);
     });
 
-    Route::middleware(['auth:petugas','ceklevel:admin'])->group(function(){
+    Route::middleware(['auth:petugas','ceklevel:admin,petugas'])->group(function(){
         Route::post('tanggapan/{id}', [PengaduanController::class, 'tanggapan'])->name('tanggapan');
         // Route::get('pengaduan/pdf', [PengaduanController::class, 'pdf'])->name('pengaduan.pdf');
         Route::resource('pengaduan', PengaduanController::class)->except('create','update','store','destroy');
     });
+});
+
+route::get('pdf', function(){
+    return view('pdf');
+});
+
+Route::middleware(['auth:masyarakat'])->prefix('masyarakat')->name('masyarakat.')->group( function(){
+    Route::resource('pengaduan', MasyarakatPengaduan::class);
 });

@@ -37,7 +37,9 @@
           <td>isi :</td>
         </tr>
       </table>
-      {{$data->isi}}
+      <div>
+        {{$data->isi}}
+      </div>
       <hr>
       <h5>Tanggapan</h5>
       <div class="mb-3">

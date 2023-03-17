@@ -1,61 +1,46 @@
-<h4 class="card-header">Tanggapi Pengaduan</h4>
+<h5 class="card-header">Edit Pengaduan {{ $data->judul}}</h5>
 <div class="card-body">
-  <form action="{{ route('petugas.tanggapan',$data->id)}}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route($route.'update',$data->id)}}" method="POST" enctype="multipart/form-data">
       @csrf
-      <table>
-        <tr>
-          <td>tujuan</td>
-          <td>:</td>
-          <td>{{'desa '.$data->village->name ?? '-'}}</td>
-        </tr>
-        <tr>
-          <td>kategori</td>
-          <td>:</td>
-          <td>{{$data->category->name ?? '-'}}</td>
-        </tr>
-        <tr>
-          <td>pelapor</td>
-          <td>:</td>
-          <td>{{ $data->pengadu->name ?? '-'}}</td>
-        </tr>
-        <tr>
-          <td>date</td>
-          <td>:</td>
-          <td>{{ $data->date}}</td>
-        </tr>
-        <tr>
-          <td>judul</td>
-          <td>:</td>
-          <td>{{ $data->judul}}</td>
-        </tr>
-        <tr>
-          <td>status</td>
-          <td>:</td>
-          <td>{{ $data->status}}</td>
-        </tr>
-        <tr>
-          <td>isi :</td>
-        </tr>
-      </table>
-      {{$data->isi}}
-      <hr>
-      <h5>Tanggapan</h5>
+      @method('put')
+
       <div class="mb-3">
-        <label for="status" class="form-label">status pengaduan</label>
-        <select class="form-control" id="status" name="status" aria-describedby="statusHelp">
+        <label for="category_id" class="form-label">category pengaduan</label>
+        <select class="form-control" id="category_id" name="category_id" aria-describedby="category_idHelp">
             <option value="" dishable selected>-- choose village --</option>
-            <option value="proses" {{ $data->status == 'proses' ? 'selected' :'' }}>proses</option>
-            <option value="selesai" {{ $data->status == 'selesai' ? 'selected' :'' }}>selesai</option>
+            @foreach ($category as $item)
+                <option value="{{$item->id}}" {{ $data->category_id == $item->id ? 'selected':''}}>{{$item->name}}</option>
+            @endforeach
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="village_id" class="form-label">tujuan sekertariat pengaduan</label>
+        <select class="form-control" id="village_id" name="village_id" aria-describedby="village_idHelp">
+            <option value="" dishable selected>-- choose village --</option>
+            @foreach ($village as $item)
+                <option value="{{$item->id}}" {{ $data->village_id == $item->id ? 'selected':''}}>{{$item->name}}</option>
+            @endforeach
         </select>
       </div>
       
       <div class="mb-3">
-        <label for="isi" class="form-label">isi tanggapan</label>
-        <textarea style="height: 250px" class="form-control" id="isi" name="isi" aria-describedby="isiHelp" value="">{{ $data->tanggapan->isi ?? ''}}</textarea>
+        <label for="judul" class="form-label">judul</label>
+        <input type="text" class="form-control" id="judul" value="{{ $data->judul}}" name="judul" aria-describedby="judulHelp">
+      </div>
+      
+      <div class="mb-3">
+        <label for="foto" class="form-label">foto</label>
+        <input type="file" accept="png,jpg,jpeg,svg" class="form-control" id="foto" name="foto" aria-describedby="fotoHelp">
+      </div>
+      
+      <div class="mb-3">
+        <label for="isi" class="form-label">isi</label>
+        <textarea style="height:250px" class="form-control" id="isi" name="isi" aria-describedby="isiHelp">{{ $data->isi}}</textarea>
       </div>
       
       <div class="d-flex justify-content-end">
-          <button  class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
       </div>
   </form>
 </div>

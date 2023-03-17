@@ -7,15 +7,19 @@
                 @if (!isset($data))
                     @include($view.'create')
                 @else
-                    @include($view.'edit')
+                    @if ($data->status == 0)
+                        @include($view.'edit')
+                    @else
+                        @include($view.'show')
+                    @endif
                 @endif
             </div>
         </div>
 
-        <div class=" {{ auth()->guard('masyarakat')->user()->level == 'masyarakat' && !isset($data)  ? "col-12" : "col-9" }} ">
+        <div class="col-9">
             <div class="d-flex justify-content-between my-3">
                 <h4>Data Pengaduan</h4>
-                @if (!isset($data) && auth()->guard('masyarakat')->user()->level == 'admin')
+                @if (!isset($data) && auth()->guard('masyarakat')->check())
                 <form class="d-flex" action="{{ route($route.'index')}}" method="get">
 
                     <div class="m-1">
@@ -60,11 +64,13 @@
 
                     <div class="">
                         <button class="btn m-1 btn-primary">filter</button>
+                        @if ( count($datas) > 0)
                         <a href="{{ request()->category ? $url.'&pdf=true' : '?pdf=true'}}" class="btn btn-warning">Print</a>
+                        @endif
                     </div>
                 </form>
                 @endif
-                @if (isset($data) && auth()->guard('masyarakat')->user()->level == 'admin')
+                @if (isset($data) && auth()->guard('masyarakat')->check())
                 <a class="btn btn-primary" href="{{ route($route.'index')}}">Create</a>
                 @endif
             </div>
@@ -99,10 +105,15 @@
                                 @csrf
                                 @method('delete')
                                 <div class="d-flex">
-                                    @if ($item->status != 'selesai')  
-                                    <a href="{{ route($route.'edit', $item->id)}}" class="btn btn-primary m-1">Tanggapi</a>
+                                    @if ($item->status == '0')  
+                                    <a href="{{ route($route.'edit', $item->id)}}" class="btn btn-primary m-1">Edit</a>
+                                    @else
+                                    <a href="{{ route($route.'edit', $item->id)}}" class="btn btn-primary m-1">Lihat</a>
                                     @endif
+
+                                    @if ($item->status != 'selesai' && $item->status != 'proses')  
                                     <button class="btn btn-danger m-1">delete</button>
+                                    @endif
                                 </div>
                                 </form>
                             </td>

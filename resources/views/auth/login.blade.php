@@ -18,15 +18,29 @@
                     
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp" autofocus>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ old('username')}}" aria-describedby="usernameHelp" autofocus>
                     </div>
+                    @if($errors->any())
+                        <div class="text-danger">
+                        {{ $errors->first('username') }}
+                        </div>
+                    @endif
                     
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp">
+                        <input type="password"  class="form-control" id="password" name="password" aria-describedby="passwordHelp">
                     </div>
+                    @if($errors->any())
+                        <div class="text-danger">
+                        {{ $errors->first('password') }}
+                        </div>
+                    @endif
                     
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-between">
+                        <div class="">
+                            Belum memiliki akun?
+                            <a href="{{ Route('masyarakat.register.view')}}">Register disini</a>
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>

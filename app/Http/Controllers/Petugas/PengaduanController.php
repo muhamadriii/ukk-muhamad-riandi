@@ -53,6 +53,7 @@ class PengaduanController extends Controller
         if ($request->village && $request->village != 'all' && auth()->guard('petugas')->user()->level == 'admin') {
             $model = $model->where('village_id', $request->village);
         }
+        
         if (auth()->guard('petugas')->user()->level == 'petugas') {
             $datas = $model->with('pengadu','category', 'village')->where('village_id', $auth->village_id)->get();
         }else{
@@ -96,7 +97,11 @@ class PengaduanController extends Controller
         $auth = auth()->guard('petugas')->user();
 
         $data = $this->model->with('pengadu')->with('village')->with('category')->with('tanggapan')->find($id);
-        $datas = $this->model->where('village_id', $auth->village_id)->get();
+        if (auth()->guard('petugas')->user()->level == 'petugas') {
+            $datas = $this->model->with('pengadu','category', 'village')->where('village_id', $auth->village_id)->get();
+        }else{
+            $datas = $this->model->with('pengadu','category', 'village')->get();
+        }
         foreach ($datas as $item) {
             $item->foto = asset('storage/foto-pengaduan').'/'.$item->foto;
         }
@@ -104,12 +109,11 @@ class PengaduanController extends Controller
         if ($request->pdf == 'true' && $data->tanggapan && $data->status != '0') {
             return $this->pdfSinggle($data);
         }
-
         if ($data->village_id == $auth->village_id) {
             return view($this->view.'index', compact('data', 'datas'));
-        }else{
-            return to_route($this->route.'index');
         }
+
+        return view($this->view.'index',compact('datas','data'));
     }
 
     public function destroy($id){
@@ -142,9 +146,9 @@ class PengaduanController extends Controller
     }
 
     public function pdf($datas){
-        $pdf = PDF::loadview($this->view.'alldatapdf',['datas'=>$datas]);
+        $pdf = PDF::loadview($this->view.'alldatapdf',['datas'=>$datas])->setpaper('a4', 'landscape');
         $name = auth()->guard('petugas')->user()->name.'-laporan-pengaduan-'.str()->random(5);
-    	return $pdf->stream($name.'.pdf');
+    	return $pdf->download($name.'.pdf');
     }
 
     public function pdfSinggle($data){

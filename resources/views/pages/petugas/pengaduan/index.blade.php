@@ -20,7 +20,11 @@
 
         <div class=" {{ auth()->guard('petugas')->user()->level == 'petugas' && !isset($data)  ? "col-12" : "col-9" }} ">
             <div class="d-flex justify-content-between my-3">
-                <h4>Data Pengaduan</h4>
+                <h4>Data Pengaduan 
+                    @if (auth()->guard('petugas')->user()->level == 'petugas')
+                        {{ 'Desa '.auth()->guard('petugas')->user()->village->name}}
+                    @endif
+                </h4>
                 @if (!isset($data))
                 <form class="d-flex" action="{{ route($route.'index')}}" method="get">
 
@@ -72,8 +76,10 @@
                     </div>
                 </form>
                 @endif
-                @if (isset($data) && auth()->guard('petugas')->check())
+                @if (isset($data) && auth()->guard('petugas')->user()->level == 'admin')
                 <a class="btn btn-primary" href="{{ route($route.'index')}}">Create</a>
+                @elseif(isset($data) && auth()->guard('petugas')->user()->level == 'petugas')
+                <a class="btn btn-primary" href="{{ route($route.'index')}}">Kembali</a>
                 @endif
             </div>
             <div class="table table-responsive">
@@ -112,7 +118,9 @@
                                     @else
                                     <a href="{{ route($route.'edit', $item->id)}}" class="btn btn-primary m-1">Tanggapi</a>
                                     @endif
+                                    @if (auth()->guard('petugas')->user()->level == 'admin')
                                     <button class="btn btn-danger m-1">delete</button>
+                                    @endif
                                 </div>
                                 </form>
                             </td>

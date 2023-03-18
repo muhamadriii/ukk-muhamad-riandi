@@ -18,7 +18,6 @@
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> --}}
 </head>
 <body>
-    
     <nav class="navbar navbar-expand-lg bg-body-warning">
         <div class="container-fluid d-flex justify-content-between">
 
@@ -32,19 +31,30 @@
                 <li class="nav-item">
                   {{-- <a class="nav-link active" aria-current="page" href="#">Home</a> --}}
                 </li>
+                @auth('masyarakat')
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="{{ route('home')}}">Home</a>
+                </li> 
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="{{ route('masyarakat.pengaduan.index')}}">Pengaduan Saya</a>
+                </li> 
+                @endauth
                 @auth('petugas')
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="{{ route('petugas.dashboard')}}">Home</a>
+                </li> 
                 @if (auth()->guard('petugas')->user()->level == 'admin')
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('petugas.masyarakat.index')}}">masyarakat</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('petugas.masyarakat.index')}}">Masyarakat</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('petugas.petugas.index')}}">petugas</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('petugas.petugas.index')}}">Petugas</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('petugas.village.index')}}">desa</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('petugas.village.index')}}">Desa</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('petugas.category.index')}}">kategori</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('petugas.category.index')}}">Kategori</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{{ route('petugas.pengaduan.index')}}">Pengaduan</a>

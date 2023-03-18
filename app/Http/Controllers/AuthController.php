@@ -8,6 +8,8 @@ use App\Models\Village;
 use Auth;
 use View;
 use Hash;
+use Validator;
+use Redirect;
 
 class AuthController extends Controller
 {
@@ -24,6 +26,15 @@ class AuthController extends Controller
 
     public function login(Request $request){
 
+        $validated = Validator::make($request->all(),[
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        if($validated->fails()) {
+            return Redirect::back()->withErrors($validated)->withInput();
+        }
+
         //login petugas/admin
         if (
             auth()->guard('petugas')->attempt([
@@ -32,7 +43,7 @@ class AuthController extends Controller
             ])
         ) {
             auth()->guard('masyarakat')->logout();
-            return to_route('petugas.pengaduan.index');
+            return to_route('petugas.dashboard');
         }
 
         // login masyarakat
@@ -43,11 +54,11 @@ class AuthController extends Controller
             ])
         ) {
             auth()->guard('petugas')->logout();
-            return to_route('masyarakat.pengaduan.index');
+            return to_route('home');
         }
 
         //login false
-        return redirect()->back();
+        return redirect()->back()->withInput();
         
     }
 
@@ -61,7 +72,7 @@ class AuthController extends Controller
     }
 
     public function registerMasyarakat(Request $request){
-        $validated = $request->validate([
+        $validated = Validator::make($request->all(),[
             'village_id' => 'required',
             'nik' => 'required|integer|unique:masyarakats',
             'name' => 'required',
@@ -69,6 +80,9 @@ class AuthController extends Controller
             'password' => 'required|max:10|min:4',
             'telp' => 'required|max:13|min:11',
         ]);
+        if($validated->fails()) {
+            return Redirect::back()->withErrors($validated)->withInput();
+        }
 
         $payload = $request->all();
         $payload['password'] = Hash::make($request->password);

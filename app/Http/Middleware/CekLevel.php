@@ -19,6 +19,6 @@ class CekLevel
         if (in_array($request->user()->level,$levels)) {
             return $next($request);
         }
-        return to_route('petugas.pengaduan.index');
+        return to_route('petugas.dashboard');
     }
 }

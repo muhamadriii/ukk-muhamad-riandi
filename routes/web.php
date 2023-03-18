@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController as GuestHome;
 
 use App\Http\Controllers\Petugas\CategoryController;
 use App\Http\Controllers\Petugas\VillageController;
@@ -31,9 +32,7 @@ Route::post('register', [AuthController::class, 'registerMasyarakat'])->name('ma
 Route::get('register', [AuthController::class, 'registerMasyarakatView'])->name('masyarakat.register.view');
 Route::post('logout', [AuthController::class, 'logout'])->middleware(['auth:petugas,masyarakat'])->name('logout');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [GuestHome::class, 'index'])->name('home');
 
 Route::prefix('petugas')->name('petugas.')->group( function(){
     Route::middleware(['auth:petugas','ceklevel:admin'])->group(function(){
@@ -46,7 +45,7 @@ Route::prefix('petugas')->name('petugas.')->group( function(){
     });
 
     Route::middleware(['auth:petugas','ceklevel:admin,petugas'])->group(function(){
-        Route::get('dashboard', [HomeController::class, 'index']);
+        Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
         Route::post('tanggapan/{id}', [PengaduanController::class, 'tanggapan'])->name('tanggapan');
         // Route::get('pengaduan/pdf', [PengaduanController::class, 'pdf'])->name('pengaduan.pdf');

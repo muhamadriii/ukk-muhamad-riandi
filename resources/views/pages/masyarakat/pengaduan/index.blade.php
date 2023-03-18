@@ -63,11 +63,13 @@
                     </div>
 
                     <div class="">
-                        <button class="btn m-1 btn-primary">Filter</button>
-                        @if ( count($datas) > 0)
-                        <a href="{{ request()->category ? $url.'&pdf=true' : '?pdf=true'}}" class="btn btn-warning">Print</a>
-                        @endif
+                        <button class="btn me-1 mt-4 btn-primary">Filter</button>
                     </div>
+                    @if ( count($datas) > 0)
+                    <div class="">
+                        <a href="{{ request()->category ? $url.'&pdf=true' : '?pdf=true'}}" class="btn mt-4 btn-warning">Print</a>
+                    </div>
+                    @endif
                 </form>
                 @endif
                 @if (isset($data) && auth()->guard('masyarakat')->check())

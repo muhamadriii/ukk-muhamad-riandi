@@ -134,7 +134,7 @@ class PengaduanController extends Controller
     }
 
     public function pdf($datas){
-        $pdf = PDF::loadview($this->view.'alldatapdf',['datas'=>$datas]);
+        $pdf = PDF::loadview($this->view.'alldatapdf',['datas'=>$datas])->setPaper('a4', 'landscape');
         $name = auth()->guard('masyarakat')->user()->name.'-laporan-pengaduan-'.str()->random(5);
     	return $pdf->download($name.'.pdf');
     }

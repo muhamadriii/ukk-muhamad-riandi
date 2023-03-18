@@ -24,7 +24,7 @@
                     <thead>
                         <tr>
                             <th>no</th>
-                            <th>name</th>
+                            <th>Nama</th>
                             <th>action</th>
                         </tr>
                     </thead>

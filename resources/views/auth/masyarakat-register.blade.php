@@ -16,7 +16,7 @@
                     <form action="{{ route('masyarakat.register')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                          <label for="village_id" class="form-label">desa</label>
+                          <label for="village_id" class="form-label">Tempat tinggal</label>
                           <select class="form-control" id="village_id" name="village_id" aria-describedby="village_idHelp">
                               @foreach ($village as $item)
                                   <option value="{{$item->id}}">{{ 'desa '.$item->name}}</option>
@@ -25,27 +25,27 @@
                         </div>
                     
                         <div class="mb-3">
-                          <label for="nik" class="form-label">nik</label>
+                          <label for="nik" class="form-label">Nik</label>
                           <input required type="number" class="form-control" id="nik" name="nik" aria-describedby="nikHelp">
                         </div>
                         
                         <div class="mb-3">
-                          <label for="name" class="form-label">name</label>
+                          <label for="name" class="form-label">Nama</label>
                           <input required type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp">
                         </div>
                         
                         <div class="mb-3">
-                          <label for="username" class="form-label">username</label>
+                          <label for="username" class="form-label">Username</label>
                           <input required type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp">
                         </div>
                         
                         <div class="mb-3">
-                          <label for="password" class="form-label">password</label>
+                          <label for="password" class="form-label">Password</label>
                           <input required type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp">
                         </div>
                         
                         <div class="mb-3">
-                          <label for="telp" class="form-label">telp</label>
+                          <label for="telp" class="form-label">Nomor telepon</label>
                           <input required type="number" class="form-control" id="telp" name="telp" aria-describedby="telpHelp">
                         </div>
                         

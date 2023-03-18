@@ -25,18 +25,18 @@
                 <form class="d-flex" action="{{ route($route.'index')}}" method="get">
 
                     <div class="m-1">
-                        <label for="strdate">str Date</label><br>
+                        <label for="strdate">Pengaduan dari tanggal</label><br>
                         <input type="date" name="strdate" id="strdate" value="{{ $request->strdate ?? ''}}">
                     </div>
                     
                     <div class="m-1">
-                        <label for="enddate">end Date</label><br>
+                        <label for="enddate">Pengaduan sampai tanggal</label><br>
                         <input type="date" name="enddate" id="enddate" value="">
                     </div>
 
                     @if (auth()->guard('petugas')->user()->level == 'admin')
                     <div class="m-1">
-                        <label for="village">desa</label><br>
+                        <label for="village">Desa</label><br>
                         <select name="village" id="village" aria-placeholder="village">
                             <option value="all">all</option>
                             @foreach ($village as $item)
@@ -47,7 +47,7 @@
                     @endif
 
                     <div class="m-1">
-                        <label for="category">category</label><br>
+                        <label for="category">Kategori</label><br>
                         <select name="category" id="category" aria-placeholder="category">
                             <option value="all">all</option>
                             @foreach ($category as $item)
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="m-1">
-                        <label for="status">status</label><br>
+                        <label for="status">Status</label><br>
                         <select name="status" id="status" aria-placeholder="status">
                             <option value="all">all</option>
                             <option value="0" {{ request()->status == '0' ? 'selected':'' }} >need perivication</option>
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="">
-                        <button class="btn m-1 btn-primary">filter</button>
+                        <button class="btn m-1 btn-primary">Filter</button>
                         <a href="{{ request()->category ? $url.'&pdf=true' : '?pdf=true'}}" class="btn btn-warning">Print</a>
                     </div>
                 </form>
@@ -80,15 +80,15 @@
                 <table class="table table-bordered table-stripped">
                     <thead>
                         <tr>
-                            <th>no</th>
-                            <th>tujuan</th>
-                            <th>kategory</th>
-                            <th>pelapor</th>
-                            <th>tanggal</th>
-                            <th>judul</th>
-                            <th>foto</th>
-                            <th>status</th>
-                            <th>action</th>
+                            <th>No</th>
+                            <th>Tujuan</th>
+                            <th>Kategori</th>
+                            <th>Pelapor</th>
+                            <th>Tanggal</th>
+                            <th>Judul</th>
+                            <th>Foto</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

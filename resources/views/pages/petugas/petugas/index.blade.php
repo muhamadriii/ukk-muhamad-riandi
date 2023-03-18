@@ -23,13 +23,13 @@
                 <table class="table table-bordered table-stripped">
                     <thead>
                         <tr>
-                            <th>no</th>
-                            <th>village</th>
-                            <th>name</th>
-                            <th>username</th>
-                            <th>telp</th>
-                            <th>level</th>
-                            <th>action</th>
+                            <th>No</th>
+                            <th>Village</th>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Telp</th>
+                            <th>Level</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

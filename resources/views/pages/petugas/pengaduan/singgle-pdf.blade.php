@@ -29,17 +29,17 @@
     <br>
     <table>
         <tr>
-            <td>pelapor</td>
+            <td>Pelapor</td>
             <td>:</td>
             <td>{{ $data->pengadu->name ?? '-'}}</td>
         </tr>
         <tr>
-            <td>Tanggal</td>
+            <td>Tanggal pengaduan</td>
             <td>:</td>
             <td>{{ $data->date ?? '-'}}</td>
         </tr>
         <tr>
-            <td>Kategory</td>
+            <td>Kategori</td>
             <td>:</td>
             <td>{{ $data->category->name ?? '-'}}</td>
         </tr>
@@ -49,7 +49,7 @@
             <td>{{ 'Desa '. $data->village->name ?? '-'}}</td>
         </tr>
         <tr>
-            <td>status</td>
+            <td>Status</td>
             <td>:</td>
             <td>{{ $data->status ?? '-'}}</td>
         </tr>
@@ -66,12 +66,12 @@
     <br>
     <table>
         <tr>
-            <td>petugas</td>
+            <td>Ditanggapi oleh</td>
             <td>:</td>
             <td>{{ $data->tanggapan->petugas->name ?? '-'}}</td>
         </tr>
         <tr>
-            <td>Tanggal</td>
+            <td>Ditanggapi pada</td>
             <td>:</td>
             <td>{{ $data->tanggapan->date}}</td>
         </tr>

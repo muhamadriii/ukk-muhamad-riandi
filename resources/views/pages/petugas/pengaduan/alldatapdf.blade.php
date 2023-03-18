@@ -29,20 +29,20 @@
     </style>
 </head>
 <body>
-    
     <h3> Pengaduan & Aspirasi Masyarakat Megamendung</h3>
+    <img src="https://kecamatanmegamendung.bogorkab.go.id/kecamatan/assets/images/logo-kabupaten.png"alt="">
     <br>
     <hr>
     <br>
     <table border="1px">
         <tr>
-            <th>no</th>
-            <th>tujuan pengaduan</th>
-            <th>kategory</th>
-            <th>pelapor</th>
-            <th>tanggal</th>
-            <th>judul</th>
-            <th>status</th>
+            <th>No</th>
+            <th>Tujuan pengaduan</th>
+            <th>Kategory</th>
+            <th>Pelapor</th>
+            <th>Tanggal</th>
+            <th>Judul</th>
+            <th>Status</th>
         </tr>
         @foreach ($datas as $item)
         <tr>

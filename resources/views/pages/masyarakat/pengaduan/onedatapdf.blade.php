@@ -36,13 +36,13 @@
     <br>
     <table border="1px">
         <tr>
-            <th>no</th>
-            <th>tujuan pengaduan</th>
-            <th>kategory</th>
-            <th>pelapor</th>
-            <th>tanggal</th>
-            <th>judul</th>
-            <th>status</th>
+            <th>No</th>
+            <th>Desa tujuan pengaduan</th>
+            <th>Kategory</th>
+            <th>Pelapor</th>
+            <th>Tanggal</th>
+            <th>Judul</th>
+            <th>Status</th>
         </tr>
         @foreach ($datas as $item)
         <tr>

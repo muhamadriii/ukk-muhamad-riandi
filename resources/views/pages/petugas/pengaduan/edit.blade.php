@@ -4,37 +4,37 @@
       @csrf
       <table>
         <tr>
-          <td>tujuan</td>
+          <td>Tujuan</td>
           <td>:</td>
           <td>{{'desa '.$data->village->name ?? '-'}}</td>
         </tr>
         <tr>
-          <td>kategori</td>
+          <td>Kategori</td>
           <td>:</td>
           <td>{{$data->category->name ?? '-'}}</td>
         </tr>
         <tr>
-          <td>pelapor</td>
+          <td>Pelapor</td>
           <td>:</td>
           <td>{{ $data->pengadu->name ?? '-'}}</td>
         </tr>
         <tr>
-          <td>date</td>
+          <td>Tanggal pengaduan</td>
           <td>:</td>
           <td>{{ $data->date}}</td>
         </tr>
         <tr>
-          <td>judul</td>
+          <td>Judul</td>
           <td>:</td>
           <td>{{ $data->judul}}</td>
         </tr>
         <tr>
-          <td>status</td>
+          <td>Status</td>
           <td>:</td>
           <td>{{ $data->status}}</td>
         </tr>
         <tr>
-          <td>isi :</td>
+          <td>Isi :</td>
         </tr>
       </table>
       <div>
@@ -43,7 +43,7 @@
       <hr>
       <h5>Tanggapan</h5>
       <div class="mb-3">
-        <label for="status" class="form-label">status pengaduan</label>
+        <label for="status" class="form-label">Status pengaduan</label>
         <select class="form-control" id="status" name="status" aria-describedby="statusHelp">
             <option value="" dishable selected>-- choose village --</option>
             <option value="proses" {{ $data->status == 'proses' ? 'selected' :'' }}>proses</option>
@@ -52,7 +52,7 @@
       </div>
       
       <div class="mb-3">
-        <label for="isi" class="form-label">isi tanggapan</label>
+        <label for="isi" class="form-label">Isi tanggapan</label>
         <textarea style="height: 250px" class="form-control" id="isi" name="isi" aria-describedby="isiHelp" value="">{{ $data->tanggapan->isi ?? ''}}</textarea>
       </div>
       

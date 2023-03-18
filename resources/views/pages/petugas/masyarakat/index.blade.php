@@ -23,12 +23,12 @@
                 <table class="table table-bordered table-stripped">
                     <thead>
                         <tr>
-                            <th>no</th>
-                            <th>nik</th>
-                            <th>village</th>
-                            <th>name</th>
-                            <th>username</th>
-                            <th>telp</th>
+                            <th>No</th>
+                            <th>Nik</th>
+                            <th>Desa</th>
+                            <th>Nama</th>
+                            <th>Username</th>
+                            <th>No telepon</th>
                             <th>action</th>
                         </tr>
                     </thead>

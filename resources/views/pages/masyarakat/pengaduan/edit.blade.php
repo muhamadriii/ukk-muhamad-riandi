@@ -5,7 +5,7 @@
       @method('put')
 
       <div class="mb-3">
-        <label for="category_id" class="form-label">category pengaduan</label>
+        <label for="category_id" class="form-label">Kategory pengaduan</label>
         <select class="form-control" id="category_id" name="category_id" aria-describedby="category_idHelp">
             <option value="" dishable selected>-- choose village --</option>
             @foreach ($category as $item)
@@ -15,7 +15,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="village_id" class="form-label">tujuan sekertariat pengaduan</label>
+        <label for="village_id" class="form-label">Desa tujuan pengaduan</label>
         <select class="form-control" id="village_id" name="village_id" aria-describedby="village_idHelp">
             <option value="" dishable selected>-- choose village --</option>
             @foreach ($village as $item)
@@ -25,17 +25,17 @@
       </div>
       
       <div class="mb-3">
-        <label for="judul" class="form-label">judul</label>
+        <label for="judul" class="form-label">Judul</label>
         <input type="text" class="form-control" id="judul" value="{{ $data->judul}}" name="judul" aria-describedby="judulHelp">
       </div>
       
       <div class="mb-3">
-        <label for="foto" class="form-label">foto</label>
+        <label for="foto" class="form-label">Foto</label>
         <input type="file" accept="png,jpg,jpeg,svg" class="form-control" id="foto" name="foto" aria-describedby="fotoHelp">
       </div>
       
       <div class="mb-3">
-        <label for="isi" class="form-label">isi</label>
+        <label for="isi" class="form-label">Isi</label>
         <textarea style="height:250px" class="form-control" id="isi" name="isi" aria-describedby="isiHelp">{{ $data->isi}}</textarea>
       </div>
       

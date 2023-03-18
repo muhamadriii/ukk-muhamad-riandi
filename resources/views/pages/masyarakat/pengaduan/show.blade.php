@@ -2,37 +2,37 @@
 <div class="card-body">
   <table>
     <tr>
-      <td>tujuan</td>
+      <td>Tujuan</td>
       <td>:</td>
       <td>{{'desa '.$data->village->name ?? '-'}}</td>
     </tr>
     <tr>
-      <td>kategori</td>
+      <td>Kategori</td>
       <td>:</td>
       <td>{{$data->category->name ?? '-'}}</td>
     </tr>
     <tr>
-      <td>pelapor</td>
+      <td>Pelapor</td>
       <td>:</td>
       <td>{{ $data->pengadu->name ?? '-'}}</td>
     </tr>
     <tr>
-      <td>date</td>
+      <td>Tanggal pengaduan</td>
       <td>:</td>
       <td>{{ $data->date}}</td>
     </tr>
     <tr>
-      <td>judul</td>
+      <td>Judul</td>
       <td>:</td>
       <td>{{ $data->judul}}</td>
     </tr>
     <tr>
-      <td>status</td>
+      <td>Status</td>
       <td>:</td>
       <td>{{ $data->status}}</td>
     </tr>
     <tr>
-      <td>isi :</td>
+      <td>Isi :</td>
     </tr>
   </table>
   <textarea style="height:250px" class="form-control" disabled>{{$data->isi}}</textarea>
@@ -51,7 +51,7 @@
       <td>{{ $data->tanggapan->date}}</td>
     </tr>
     <tr>
-      <td>isi :</td>
+      <td>Isi :</td>
     </tr>
   </table>
   <textarea style="height:250px" class="form-control" disabled >{{ $data->tanggapan->isi}}</textarea>

@@ -64,7 +64,7 @@
             <form class="d-flex" action="{{ route('logout')}}" method="post">
               @csrf
               @if (auth()->guard('petugas')->user())
-              <h5>Hi {{ str()->limit(auth()->guard('petugas')->user()->name, 7) }}</h5>
+              <h5>Hi {{ str()->limit(auth()->guard('petugas')->user()->village->name, 7) }}</h5>
               @else
               <h5>Hi {{ str()->limit(auth()->guard('masyarakat')->user()->name, 7) }}</h5>
               @endif

@@ -29,12 +29,12 @@
     <br>
     <table>
         <tr>
-            <td>pelapor</td>
+            <td>Pelapor</td>
             <td>:</td>
             <td>{{ $data->pengadu->name ?? '-'}}</td>
         </tr>
         <tr>
-            <td>Tanggal</td>
+            <td>Tanggal Pengaduan</td>
             <td>:</td>
             <td>{{ $data->date ?? '-'}}</td>
         </tr>
@@ -49,7 +49,7 @@
             <td>{{ 'Desa '. $data->village->name ?? '-'}}</td>
         </tr>
         <tr>
-            <td>status</td>
+            <td>Status</td>
             <td>:</td>
             <td>{{ $data->status ?? '-'}}</td>
         </tr>
@@ -66,7 +66,7 @@
     <br>
     <table>
         <tr>
-            <td>petugas</td>
+            <td>Petugas</td>
             <td>:</td>
             <td>{{ $data->tanggapan->petugas->name ?? '-'}}</td>
         </tr>

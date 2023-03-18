@@ -51,7 +51,7 @@
       <td>{{ $data->tanggapan->date}}</td>
     </tr>
     <tr>
-      <td>isi :</td>
+      <td>Isi :</td>
     </tr>
   </table>
   <textarea style="height:250px" class="form-control" disabled >{{ $data->tanggapan->isi}}</textarea>

@@ -23,9 +23,9 @@
                 <table class="table table-bordered table-stripped">
                     <thead>
                         <tr>
-                            <th>no</th>
-                            <th>name</th>
-                            <th>action</th>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

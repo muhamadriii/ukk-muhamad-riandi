@@ -59,8 +59,8 @@ class PengaduanController extends Controller
             $datas = $model->with('pengadu','category', 'village')->get();
         }
 
-        foreach ($datas as $data) {
-            $data->foto = asset('storage/foto-pengaduan').'/'.$data->foto;
+        foreach ($datas as $pdata) {
+            $pdata->foto = asset('storage/foto-pengaduan').'/'.$pdata->foto;
         }
 
         if ($a = $request->pdf == true) {
@@ -144,7 +144,7 @@ class PengaduanController extends Controller
     public function pdf($datas){
         $pdf = PDF::loadview($this->view.'alldatapdf',['datas'=>$datas]);
         $name = auth()->guard('petugas')->user()->name.'-laporan-pengaduan-'.str()->random(5);
-    	return $pdf->download($name.'.pdf');
+    	return $pdf->stream($name.'.pdf');
     }
 
     public function pdfSinggle($data){

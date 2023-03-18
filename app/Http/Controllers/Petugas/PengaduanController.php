@@ -92,14 +92,24 @@ class PengaduanController extends Controller
         return to_route($this->route.'index');
     }
 
-    public function edit($id){
+    public function edit(Request $request,$id){
+        $auth = auth()->guard('petugas')->user();
+
         $data = $this->model->with('pengadu')->with('village')->with('category')->with('tanggapan')->find($id);
-        $datas = $this->model->get();
+        $datas = $this->model->where('village_id', $auth->village_id)->get();
         foreach ($datas as $item) {
             $item->foto = asset('storage/foto-pengaduan').'/'.$item->foto;
         }
+        
+        if ($request->pdf == 'true' && $data->tanggapan && $data->status != '0') {
+            return $this->pdfSinggle($data);
+        }
 
-        return view($this->view.'index', compact('data', 'datas'));
+        if ($data->village_id == $auth->village_id) {
+            return view($this->view.'index', compact('data', 'datas'));
+        }else{
+            return to_route($this->route.'index');
+        }
     }
 
     public function destroy($id){
@@ -134,6 +144,12 @@ class PengaduanController extends Controller
     public function pdf($datas){
         $pdf = PDF::loadview($this->view.'alldatapdf',['datas'=>$datas]);
         $name = auth()->guard('petugas')->user()->name.'-laporan-pengaduan-'.str()->random(5);
+    	return $pdf->download($name.'.pdf');
+    }
+
+    public function pdfSinggle($data){
+        $pdf = PDF::loadview($this->view.'singgle-pdf',['data'=>$data]);
+        $name = auth()->guard('petugas')->user()->name.'-laporan-'.$data->judul.'-00-'.str()->random(5);
     	return $pdf->download($name.'.pdf');
     }
 

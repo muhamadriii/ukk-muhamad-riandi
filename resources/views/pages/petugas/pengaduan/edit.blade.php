@@ -57,7 +57,10 @@
       </div>
       
       <div class="d-flex justify-content-end">
-          <button  class="btn btn-primary">Submit</button>
+        @if ($data->status == 'proses' && $data->tanggapan)
+        <a href="{{ url()->current().'?pdf=true' }}" class="btn btn-warning me-1">Print</a>
+        @endif
+        <button  class="btn btn-primary">Submit</button>
       </div>
   </form>
 </div>

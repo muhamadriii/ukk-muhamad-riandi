@@ -8,6 +8,7 @@ use App\Http\Controllers\Petugas\VillageController;
 use App\Http\Controllers\Petugas\MasyarakatController;
 use App\Http\Controllers\Petugas\PetugasController;
 use App\Http\Controllers\Petugas\PengaduanController;
+use App\Http\Controllers\Petugas\HomeController;
 
 use App\Http\Controllers\masyarakat\PengaduanController as MasyarakatPengaduan;
 
@@ -26,6 +27,8 @@ use App\Http\Controllers\masyarakat\PengaduanController as MasyarakatPengaduan;
 // authentication
 Route::get('login', [AuthController::class, 'loginView'])->name('login.view');
 Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('register', [AuthController::class, 'registerMasyarakat'])->name('masyarakat.register');
+Route::get('register', [AuthController::class, 'registerMasyarakatView'])->name('masyarakat.register.view');
 Route::post('logout', [AuthController::class, 'logout'])->middleware(['auth:petugas,masyarakat'])->name('logout');
 
 Route::get('/', function () {
@@ -43,6 +46,8 @@ Route::prefix('petugas')->name('petugas.')->group( function(){
     });
 
     Route::middleware(['auth:petugas','ceklevel:admin,petugas'])->group(function(){
+        Route::get('dashboard', [HomeController::class, 'index']);
+
         Route::post('tanggapan/{id}', [PengaduanController::class, 'tanggapan'])->name('tanggapan');
         // Route::get('pengaduan/pdf', [PengaduanController::class, 'pdf'])->name('pengaduan.pdf');
         Route::resource('pengaduan', PengaduanController::class)->except('create','update','store','destroy');

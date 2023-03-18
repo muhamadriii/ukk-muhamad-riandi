@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('app.css')}}">
 </head>
 <body>
-    <div class="row justify-content-center">
+    <div class="row mt-5 justify-content-center">
         <div class="col-6">
             <div class="card">
                 <h4 class="card-header">Login</h4>

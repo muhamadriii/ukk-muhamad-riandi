@@ -6,11 +6,14 @@
             <div class="card">
                 @if (!isset($data))
                     @if (auth()->guard('petugas')->user()->level == 'admin')
-                        
-                    @include($view.'create')
+                        @include($view.'create')
                     @endif
                 @else
-                    @include($view.'edit')
+                    @if ($data->tanggapan && $data->status == 'selesai')
+                        @include($view.'show')
+                    @else
+                        @include($view.'edit')
+                    @endif
                 @endif
             </div>
         </div>
@@ -104,7 +107,9 @@
                                 @csrf
                                 @method('delete')
                                 <div class="d-flex">
-                                    @if ($item->status != 'selesai')  
+                                    @if ($item->status == 'selesai')  
+                                    <a href="{{ route($route.'edit', $item->id)}}" class="btn btn-primary m-1">Lihat</a>
+                                    @else
                                     <a href="{{ route($route.'edit', $item->id)}}" class="btn btn-primary m-1">Tanggapi</a>
                                     @endif
                                     <button class="btn btn-danger m-1">delete</button>
